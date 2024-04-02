@@ -1,0 +1,114 @@
+* {
+  font-family: "Noto Serif TC", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+  background-image: url("./img/bg.png");
+}
+img {
+  height: 99vh;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+}
+button {
+  width: 12%;
+  position: absolute;
+  bottom: 4%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background-color: transparent;
+  /* padding: 8px 35px 8px 35px; */
+}
+
+@keyframes shine {
+  0% {
+    text-shadow: 0 0 30px rgba(159, 159, 159, 0.8);
+    color: black;
+  }
+  50% {
+    text-shadow: 0 0 10px rgba(140, 140, 140, 0.5);
+    color: #989898;
+  }
+  100% {
+    text-shadow: 0 0 30px rgba(159, 159, 159, 0.8);
+    color: black;
+  }
+}
+
+#recordBtn,
+#stopBtn {
+  animation: shine 2s infinite;
+}
+#recordBtn:hover,
+#stopBtn:hover {
+  cursor: pointer;
+  animation: none;
+  color: #b3b3b3;
+}
+#stopBtn {
+  display: none;
+}
+@keyframes dropScale {
+  0% {
+    transform: translate(-50%, -50%) scale(1); /* 在動畫開始時，圖片位於原始位置 */
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05); /* 在動畫的中間，圖片放大 */
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1); /* 在動畫結束時，圖片返回原始大小 */
+  }
+}
+.dropAni {
+  animation: dropScale 1.5s infinite;
+}
+
+/* 分析文字 */
+.loadTxt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  display: none;
+  text-align: center;
+  line-height: 50px;
+}
+
+video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin: auto;
+  height: 97vh;
+  display: none;
+  z-index: 1;
+}
+
+.afterVideo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+}
+.afterVideo div {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  border: none;
+  margin: 80px;
+  padding: 10px;
+  animation: shine 2s infinite;
+  background-color: transparent;
+  font-size: 24px;
+}
+.afterVideo div:hover {
+  color: #b3b3b3;
+  animation: none;
+}

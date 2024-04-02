@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Model Viewer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg"></div>
+    <div id="btnGroup">
+      <button id="recordBtn">
+        錄音
+        <br />
+        record
+      </button>
+      <button id="stopBtn">
+        停止
+        <br />
+        stop
+      </button>
+      <img id="dropImg" src="./img/drop.png" alt="" />
+    </div>
+
+    <div class="loadTxt" id="loadTxt">
+      <span>分</span>
+      <span>析</span>
+      <span>中</span>
+      <br />
+      <span>l</span>
+      <span>o</span>
+      <span>a</span>
+      <span>d</span>
+      <span>i</span>
+      <span>n</span>
+      <span>g</span>
+    </div>
+
+    <video src="./video/happy_fish.mp4" id="emotionVideo" muted autoplay>
+      Your browser does not support the video tag.
+    </video>
+
+    <div class="afterVideo" id="afterVideo">
+      <div>
+        回到首頁
+        <br />
+        HOME
+      </div>
+      <div id="againExp">
+        再體驗一次
+        <br />
+        AGAIN
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
