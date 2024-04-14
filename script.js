@@ -12,6 +12,41 @@ var currentIndex = 0; // 當前正在移動的元素索引
 var originalTop = 0; // 上一個元素的原始top值
 var lastTop = 0; // 最後一個元素的原始top值
 
+var que = "，請幫我分析這段話的情緒是「喜、怒、哀、懼」這四種情緒中的哪一種，回復一個字"
+
+
+// 创建语音辨識对象
+const recognition = new webkitSpeechRecognition() || new SpeechRecognition();
+
+
+// 设置一些辨識选项
+recognition.lang = 'zh-TW'; // 设置识别语言
+recognition.continuous = true; // 设置连续识别
+
+recognition.onstart = function () {
+  console.log("start");
+}
+
+recognition.onend = function () {
+  console.log("end");
+}
+
+recognition.onresult = (event) => {
+  recognition.stop();
+  dropImg.classList.remove("dropAni");
+  btnGroup.style.display = "none";
+  loadTxt.style.display = "block";
+  result = event.results[event.results.length - 1][0].transcript;
+  console.log(result);
+  emotion_analyze(result);
+};
+
+
+
+recognition.onerror = (event) => {
+  console.error('語音辨識錯誤', event.error);
+};
+
 function moveElements() {
   // 將當前正在移動的元素往上移動1像素
   var currentElement = loadElements[currentIndex];
@@ -47,8 +82,7 @@ function moveElements() {
 }
 
 loadTxt.addEventListener("click", () => {
-  emotionVideo.style.display = "block";
-  loadTxt.style.display = "none";
+
 });
 emotionVideo.addEventListener("ended", () => {
   emotionVideo.style.display = "none";
@@ -62,14 +96,58 @@ recordBtn.addEventListener("click", () => {
   recordBtn.style.display = "none";
   stopBtn.style.display = "block";
   dropImg.classList.add("dropAni");
-});
-
-stopBtn.addEventListener("click", () => {
-  dropImg.classList.remove("dropAni");
-  btnGroup.style.display = "none";
-  loadTxt.style.display = "block";
+  recognition.start();
 });
 
 againExp.addEventListener("click", () => {
   window.location.reload();
 });
+
+function emotion_analyze(text) {
+  fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer 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' // 替換成你的 API Key
+    },
+    body: JSON.stringify({
+      "model": "gpt-4", // ChatGPT 模型版本
+      "messages": [{ "role": "user", "content": "「" + text + "」" + que }]
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      // 在對話框中顯示 ChatGPT 返回的回應
+      var emo = data.choices[0].message.content;
+      if (emo != '') {
+        emotionVideo.style.display = "block";
+        loadTxt.style.display = "none";
+      }
+      if (emo == "喜") {
+        let r = Math.floor(Math.random() * 2);
+        emotionVideo.src = "video/happy" + r + ".mp4";
+        console.log(emo);
+      }
+      else if (emo == "怒") {
+        let r = Math.floor(Math.random() * 2);
+        emotionVideo.src = "video/angry" + r + ".mp4";
+        console.log(emo);
+      }
+      else if (emo == "哀") {
+        let r = Math.floor(Math.random() * 2);
+        emotionVideo.src = "video/sad" + r + ".mp4";
+        console.log(emo);
+      }
+      else if (emo == "懼") {
+        let r = Math.floor(Math.random() * 2);
+        emotionVideo.src = "video/fear" + r + ".mp4";
+        console.log(emo);
+      }
+      else {
+        let r = Math.floor(Math.random() * 2);
+        emotionVideo.src = "video/happy" + r + ".mp4";
+        console.log(emo);
+      }
+    })
+    .catch(error => console.error('Error:', error));
+}
